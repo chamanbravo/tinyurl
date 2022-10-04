@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>tinyURL</title>
+</head>
+<body>
+    <div class="h-screen w-screen bg-[#121212] flex justify-center items-center">
+        <div class="flex flex-col gap-[1rem] justify-center">
+            <img src="https://i.imgflip.com/1vidur.jpg?a462168" class="w-[500px] rounded-[10px]"/>
+            <h1 class="text-[2rem] font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-[transparent]">Smoll Url</h1>
+            <div class="flex gap-[1rem] items-center">
+                <input type="text" class="bg-[#393c46] text-[1.2rem] rounded-[8px] text-[#fff] outline-none pl-[0.6rem] py-[8px] w-[400px]">
+                <button class="bg-[#fff] text-[#fff] outline-none border-none py-[8px] rounded-[8px] px-[10px] font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Shorten</button>
+            </div>
+            <a class="bg-[#393c46] rounded-[8px] px-[10px] px-[10px] text-[1.4rem] text-indigo-500  w-[400px] text-center" href=""></a>
+        </div>
+    </div>
+</body>
+<script>
+    const input = document.querySelector('input');
+    const button = document.querySelector('button');
+    const a = document.querySelector('a');
+    console.log(a);
+    button.addEventListener('click', () => {
+        fetch('/shorten', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Url: input.value
+            })
+        }).then(res => res.json()).then(data => {
+            a.innerText = `http://${window.location.host}/${data.tinyUrl}`;
+            a.href = `http://${window.location.host}/${data.tinyUrl}`;
+        })
+    })
+</script>
+</html>
